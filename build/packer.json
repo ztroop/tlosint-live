@@ -1,0 +1,53 @@
+{
+  "builders": [
+    {
+      "type": "qemu",
+      "accelerator": "kvm",
+      "headless": true,
+      "vm_name": "tlosint.qcow2",
+      "output_directory": "output",
+      "vnc_bind_address": "0.0.0.0",
+      "vnc_port_min": 5950,
+      "vnc_port_max": 5950,
+      "disk_size": 81920,
+      "disk_interface": "virtio",
+      "memory": 2048,
+      "format": "qcow2",
+      "http_directory": "http",
+      "iso_checksum": "sha256:fba1719cb76ff402f3a41213fe0ee94ecaa9097e3426ffca07cbca168a139644",
+      "iso_urls": ["iso/kali-linux-rolling-live-tracelabs-amd64.iso"],
+      "shutdown_command": "echo 'osint'|sudo -S shutdown -P now",
+      "ssh_username": "osint",
+      "ssh_password": "osint",
+      "ssh_port": 22,
+      "ssh_timeout": "8000s",
+      "boot_wait": "10s",
+      "boot_command": [
+        "<esc>",
+        "/install/vmlinuz",
+        " auto",
+        " console-setup/ask_detect=false",
+        " console-setup/layoutcode=us",
+        " console-setup/modelcode=pc105",
+        " debconf/frontend=noninteractive",
+        " debian-installer=en_US",
+        " fb=false",
+        " initrd=/install/initrd.gz",
+        " kbd-chooser/method=us",
+        " netcfg/choose_interface=eth0",
+        " console-keymaps-at/keymap=us",
+        " keyboard-configuration/xkb-keymap=us",
+        " keyboard-configuration/layout=USA",
+        " keyboard-configuration/variant=USA",
+        " locale=en_US",
+        " netcfg/get_domain=vm",
+        " netcfg/get_hostname=tlosint",
+        " grub-installer/bootdev=/dev/vda",
+        " noapic",
+        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg auto=true priority=critical",
+        " -- ",
+        "<enter>"
+      ]
+    }
+  ]
+}

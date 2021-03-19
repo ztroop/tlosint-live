@@ -1,0 +1,29 @@
+---
+resources:
+- name: repo
+  type: git
+  icon: github
+  source:
+    uri: https://github.com/ztroop/tlosint-live.git
+    branch: develop
+- name: builder-image
+  type: registry-image
+  source:
+    repository: ztroop/builder-image:latest
+
+jobs:
+- name: job
+  public: true
+  plan:
+  - get: repo
+    trigger: true
+  - task: install
+    image: builder-image
+    config:
+      inputs:
+      - name: repo
+      platform: linux
+      run:
+        path: sh
+        args:
+        - build/build.sh

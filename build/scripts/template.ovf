@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<Envelope ovf:version="1.0" xml:lang="en-US" xmlns="http://schemas.dmtf.org/ovf/envelope/1" xmlns:ovf="http://schemas.dmtf.org/ovf/envelope/1" xmlns:rasd="http://schemas.dmtf.org/wbem/wscim/1/cim-schema/2/CIM_ResourceAllocationSettingData" xmlns:vssd="http://schemas.dmtf.org/wbem/wscim/1/cim-schema/2/CIM_VirtualSystemSettingData" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:vbox="http://www.virtualbox.org/ovf/machine">
+  <References>
+    <File ovf:id="file1" ovf:href="{{ vmdk_file }}"/>
+  </References>
+  <DiskSection>
+    <Info>List of the virtual disks used in the package</Info>
+    <Disk ovf:capacity="{{ ovf_capacity }}" ovf:diskId="{{ ovf_disk_id }}" ovf:fileRef="file1" ovf:format="http://www.vmware.com/interfaces/specifications/vmdk.html#streamOptimized" vbox:uuid="{{ ovf_disk_uuid }}"/>
+  </DiskSection>
+  <NetworkSection>
+    <Info>Logical networks used in the package</Info>
+    <Network ovf:name="NAT">
+      <Description>Logical network used by this appliance.</Description>
+    </Network>
+  </NetworkSection>
+  <VirtualSystem ovf:id="{{ OVF_ID }}">
+    <Info>A virtual machine</Info>
+    <ProductSection>
+      <Info>Meta-information about the installed software</Info>
+      <Product>OSINT VM</Product>
+      <Vendor>Trace Labs</Vendor>
+      <Version>{{ VERSION }}</Version>
+      <ProductUrl>{{ TL_URL }}</ProductUrl>
+      <VendorUrl>{{ VENDOR_URL }}</VendorUrl>
+    </ProductSection>
+    <AnnotationSection>
+      <Info>A human-readable annotation</Info>
+      <Annotation>{{ tl_description }}</Annotation>
+    </AnnotationSection>
+    <OperatingSystemSection ovf:id="{{ os_type_id }}">
+      <Info>The kind of installed guest operating system</Info>
+      <Description>{{ os_type }}</Description>
+      <vbox:OSType ovf:required="false">{{ os_type }}</vbox:OSType>
+    </OperatingSystemSection>
+    <VirtualHardwareSection>
+      <Info>Virtual hardware requirements for a virtual machine</Info>
+      <System>
+        <vssd:ElementName>Virtual Hardware Family</vssd:ElementName>
+        <vssd:InstanceID>0</vssd:InstanceID>
+        <vssd:VirtualSystemIdentifier>{{ ovf_id }}</vssd:VirtualSystemIdentifier>
+        <vssd:VirtualSystemType>virtualbox-2.2</vssd:VirtualSystemType>
+      </System>
+      <Item>
+        <rasd:Caption>{{ cpu_amount }} virtual CPU</rasd:Caption>
+        <rasd:Description>Number of virtual CPUs</rasd:Description>
+        <rasd:ElementName>{{ cpu_amount }} virtual CPU</rasd:ElementName>
+        <rasd:InstanceID>{{ cpu_amount }}</rasd:InstanceID>
+        <rasd:ResourceType>3</rasd:ResourceType>
+        <rasd:VirtualQuantity>{{ cpu_amount }}</rasd:VirtualQuantity>
+      </Item>
+      <Item>
+        <rasd:AllocationUnits>MegaBytes</rasd:AllocationUnits>
+        <rasd:Caption>{{ memory_amount }} MB of memory</rasd:Caption>
+        <rasd:Description>Memory Size</rasd:Description>
+        <rasd:ElementName>{{ memory_amount }} MB of memory</rasd:ElementName>
+        <rasd:InstanceID>2</rasd:InstanceID>
+        <rasd:ResourceType>4</rasd:ResourceType>
+        <rasd:VirtualQuantity>{{ memory_amount }}</rasd:VirtualQuantity>
+      </Item>
+      <Item>
+        <rasd:Address>0</rasd:Address>
+        <rasd:Caption>ideController0</rasd:Caption>
+        <rasd:Description>IDE Controller</rasd:Description>
+        <rasd:ElementName>ideController0</rasd:ElementName>
+        <rasd:InstanceID>3</rasd:InstanceID>
+        <rasd:ResourceSubType>PIIX4</rasd:ResourceSubType>
+        <rasd:ResourceType>5</rasd:ResourceType>
+      </Item>
+      <Item>
+        <rasd:Address>1</rasd:Address>
+        <rasd:Caption>ideController1</rasd:Caption>
+        <rasd:Description>IDE Controller</rasd:Description>
+        <rasd:ElementName>ideController1</rasd:ElementName>
+        <rasd:InstanceID>4</rasd:InstanceID>
+        <rasd:ResourceSubType>PIIX4</rasd:ResourceSubType>
+        <rasd:ResourceType>5</rasd:ResourceType>
+      </Item>
+      <Item>
+        <rasd:Address>0</rasd:Address>
+        <rasd:Caption>sataController0</rasd:Caption>
+        <rasd:Description>SATA Controller</rasd:Description>
+        <rasd:ElementName>sataController0</rasd:ElementName>
+        <rasd:InstanceID>5</rasd:InstanceID>
+        <rasd:ResourceSubType>AHCI</rasd:ResourceSubType>
+        <rasd:ResourceType>20</rasd:ResourceType>
+      </Item>
+      <Item>
+        <rasd:Address>0</rasd:Address>
+        <rasd:Caption>usb</rasd:Caption>
+        <rasd:Description>USB Controller</rasd:Description>
+        <rasd:ElementName>usb</rasd:ElementName>
+        <rasd:InstanceID>6</rasd:InstanceID>
+        <rasd:ResourceType>23</rasd:ResourceType>
+      </Item>
+      <Item>
+        <rasd:AddressOnParent>3</rasd:AddressOnParent>
+        <rasd:AutomaticAllocation>false</rasd:AutomaticAllocation>
+        <rasd:Caption>sound</rasd:Caption>
+        <rasd:Description>Sound Card</rasd:Description>
+        <rasd:ElementName>sound</rasd:ElementName>
+        <rasd:InstanceID>7</rasd:InstanceID>
+        <rasd:ResourceSubType>ensoniq1371</rasd:ResourceSubType>
+        <rasd:ResourceType>35</rasd:ResourceType>
+      </Item>
+      <Item>
+        <rasd:AddressOnParent>0</rasd:AddressOnParent>
+        <rasd:Caption>disk1</rasd:Caption>
+        <rasd:Description>Disk Image</rasd:Description>
+        <rasd:ElementName>disk1</rasd:ElementName>
+        <rasd:HostResource>/disk/{{ ovf_disk_id }}</rasd:HostResource>
+        <rasd:InstanceID>8</rasd:InstanceID>
+        <rasd:Parent>5</rasd:Parent>
+        <rasd:ResourceType>17</rasd:ResourceType>
+      </Item>
+      <Item>
+        <rasd:AutomaticAllocation>true</rasd:AutomaticAllocation>
+        <rasd:Caption>Ethernet adapter on 'NAT'</rasd:Caption>
+        <rasd:Connection>NAT</rasd:Connection>
+        <rasd:ElementName>Ethernet adapter on 'NAT'</rasd:ElementName>
+        <rasd:InstanceID>9</rasd:InstanceID>
+        <rasd:ResourceSubType>E1000</rasd:ResourceSubType>
+        <rasd:ResourceType>10</rasd:ResourceType>
+      </Item>
+    </VirtualHardwareSection>
+    <vbox:Machine ovf:required="false" version="1.16-windows" uuid="{% raw %}{{% endraw %}{{ VBOX_UUID }}{% raw %}}{% endraw %}" name="{{ OVF_ID }}" OSType="{{ os_type }}" snapshotFolder="Snapshots" lastStateChange="2021-03-27T05:03:44Z">
+      <ovf:Info>Complete VirtualBox machine configuration in VirtualBox format</ovf:Info>
+      <Description>{{ tl_description }}</Description>
+      <ExtraData>
+        <ExtraDataItem name="GUI/LastNormalWindowPosition" value="391,57,400,336"/>
+      </ExtraData>
+      <Hardware>
+        <CPU>
+          <PAE enabled="false"/>
+          <LongMode enabled="true"/>
+          <X2APIC enabled="true"/>
+          <HardwareVirtExLargePages enabled="true"/>
+        </CPU>
+        <Memory RAMSize="{{ memory_amount }}"/>
+        <HID Pointing="USBTablet"/>
+        <Display controller="VMSVGA" VRAMSize="16"/>
+        <VideoCapture screens="1" file="." fps="25"/>
+        <BIOS>
+          <IOAPIC enabled="true"/>
+          <SmbiosUuidLittleEndian enabled="true"/>
+        </BIOS>
+        <USB>
+          <Controllers>
+            <Controller name="OHCI" type="OHCI"/>
+          </Controllers>
+        </USB>
+        <Network>
+          <Adapter slot="0" enabled="true" MACAddress="080027E000C8" type="82540EM">
+            <NAT/>
+          </Adapter>
+        </Network>
+        <AudioAdapter codec="AD1980" driver="DirectSound" enabled="true" enabledIn="false"/>
+        <RTC localOrUTC="UTC"/>
+        <Clipboard/>
+        <GuestProperties>
+          <GuestProperty name="/VirtualBox/GuestAdd/Revision" value="142142" timestamp="1615974614770217601" flags=""/>
+          <GuestProperty name="/VirtualBox/GuestAdd/Version" value="6.1.18" timestamp="1615974614769249703" flags=""/>
+          <GuestProperty name="/VirtualBox/GuestAdd/VersionExt" value="6.1.18_Debian" timestamp="1615974614770217600" flags=""/>
+          <GuestProperty name="/VirtualBox/GuestInfo/OS/Product" value="Linux" timestamp="1615974614768591500" flags=""/>
+          <GuestProperty name="/VirtualBox/GuestInfo/OS/Release" value="5.10.0-kali3-amd64" timestamp="1615974614769249700" flags=""/>
+          <GuestProperty name="/VirtualBox/GuestInfo/OS/Version" value="#1 SMP Debian 5.10.13-1kali1 (2021-02-08)" timestamp="1615974614769249701" flags=""/>
+          <GuestProperty name="/VirtualBox/HostInfo/GUI/LanguageID" value="en_US" timestamp="1615975191900596300" flags=""/>
+        </GuestProperties>
+      </Hardware>
+      <StorageControllers>
+        <StorageController name="IDE" type="PIIX4" PortCount="2" useHostIOCache="true" Bootable="true">
+          <AttachedDevice passthrough="false" type="DVD" hotpluggable="false" port="1" device="0"/>
+        </StorageController>
+        <StorageController name="SATA" type="AHCI" PortCount="1" useHostIOCache="false" Bootable="true" IDE0MasterEmulationPort="0" IDE0SlaveEmulationPort="1" IDE1MasterEmulationPort="2" IDE1SlaveEmulationPort="3">
+          <AttachedDevice type="HardDisk" hotpluggable="false" port="0" device="0">
+            <Image uuid="{% raw %}{{% endraw %}{{ ovf_disk_uuid }}{% raw %}}{% endraw %}"/>
+          </AttachedDevice>
+        </StorageController>
+      </StorageControllers>
+    </vbox:Machine>
+  </VirtualSystem>
+</Envelope>

@@ -7,6 +7,8 @@ cd $BASEDIR
 
 packer build --force packer.json
 
+pip3 install awscli jinja2
+
 pushd ./output
     qemu-img convert -f qcow2 tlosint.qcow2 -O vmdk ${FILENAME}.vmdk
     python ./scripts/generate_ovf.py ${FILENAME}
@@ -14,8 +16,6 @@ pushd ./output
     tar -cvf ${FILENAME}.ova ${FILENAME}.vmdk ${FILENAME}.ovf ${FILENAME}.mf
     sha256sum ${FILENAME}.ova > ${FILENAME}.sha256sum
 popd
-
-pip3 install awscli
 
 mkdir ~/.aws
 cat << EOF > ~/.aws/config
